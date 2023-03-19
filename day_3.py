@@ -4,31 +4,29 @@ class Person:
         self.__name = name
         self.__mood = "Happy"
         self.__money = 0
-        self.__healthRate
+        self.__healthRate = 100
     
     def getName(self):
         return self.__name
 
 
-    # There is no need for setter here since it will depend on sleep and work
-    # def setHealthRate(self, healthRate):
-    #     if healthRate >= 0 and healthRate <= 100:
-    #         self.__healthRate = healthRate
-    #     else:
-    #         return "Health rate must be between 0 and 100"
+    def setHealthRate(self, healthRate):
+        if healthRate >= 0 and healthRate <= 100:
+            self.__healthRate = healthRate
+        else:
+            return "Health rate must be between 0 and 100"
     
 
     def getHealthRate(self, healthRate):
         return self.__healthRate
 
-    # There is no need for setter here since it will depend on number of meals given by eat
-    # def setMood(self, mood):
-    #     if mood in Person.moods:
-    #         self.__mood = mood
-    #     else:
-    #         return "Acceptable moods are happy, tired, lazy"
+    def setMood(self, mood):
+        if mood in Person.moods:
+            self.__mood = mood
+        else:
+            return "Acceptable moods are happy, tired, lazy"
 
-    def getMood(self, mood):
+    def getMood(self):
         return self.__mood
 
     def sleep(self, sleepHours):
@@ -59,11 +57,11 @@ class Person:
 class Employee(Person):
 
     def __init__(self, name):
-        super(Employee, self). init (name)
-        self.__salary
+        super(Employee, self).__init__(name)
+        self.__salary = 0
         self.__car = Car()
-        self.__email
-        self.__distanceToWork = None
+        self.__email = None
+        self.__distanceToWork = 0
 
     # make setters and getters for salary so I can control the value
     def setSalary(self, salary):
@@ -77,19 +75,21 @@ class Employee(Person):
        
     def work(self, workHours):
         if workHours == 8:
-            self.__mood = "happy"
+            self.setMood("happy")
 
         elif workHours > 8:
-            self.__mood = "tired"
+            self.setMood("tired")
 
         else:
-            self.__mood = "lazy"
+            self.setMood("lazy")
 
     def drive(self, velocity):
-        self.__car.run(self.__distanceToWork, velocity)       
+        self.__car.run(self.__distanceToWork, velocity)
+        self.__distanceToWork -= 5       
 
-    def refuel():
-        print("Can refuel")
+    def refuel(self):
+        fuelRate = self.__car.getFuelRate()
+        self.__car.setFuelRate(fuelRate + 100)
 
     def send_mail():
         print("Can send Email")
@@ -99,8 +99,8 @@ class Employee(Person):
 class Car:
     def __init__(self):
         self.name = None
-        self.__fuelRate = None
-        self.__velocity = None
+        self.__fuelRate = 0
+        self.__velocity = 0
 
     # make setters and getters for salary so I can control the value
     def setFuelRate(self, fuelRate):
@@ -130,11 +130,21 @@ class Car:
 
     def run(self, distance, velocity):
         self.__velocity = velocity
+        self.__fuelRate -= 5
+        if self.__fuelRate == 0:
+            print("Remaining distance" + str(distance))
+            Car.stop()
         
 
-    def stop():
-        print("stop the car")
+    def stop(self):
+        self.__velocity = 0
 
-# There is a still a lot of work to do.
-# sorry for being late, I had some problem lately 
-# thank you for your understanding
+
+
+class Office:
+    def __init__(self, name):
+        self.__name = name
+        employee = []
+
+    def getOfficeName(self):
+        return self.__name
